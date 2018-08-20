@@ -20,13 +20,13 @@ Enemy.prototype.update = function(dt) {
     (this.x < 505) ? this.x += (this.speed * dt) : this.x = -90;
 
     // If the enemy and the player collide.
-    if (this.x < player.x + 30 
-        && this.x + 60 > player.x 
-        && this.y < player.y + 60 
-        && this.y + 40 > player.y) {
+    if (this.x < player.x + 30 &&
+        this.x + 60 > player.x &&
+        this.y < player.y + 60 &&
+        this.y + 40 > player.y) {
         player.reset();
     }
-}
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -41,7 +41,7 @@ class Player {
 
     update() {
         // If the player wins the game by reaching the water
-        player.y < 20 ? player.reset() : null;
+        this.y < 20 ? this.reset() : null;
     }
 
     render() {
@@ -51,11 +51,15 @@ class Player {
     // Prevents the player from running off the board
     // And moves them using the appropriate input
     handleInput(input) {
-        (input === 'left' && this.x > 0) ? this.x -= 100
-            : (input === 'right' && this.x < 400) ? this.x += 100
-            : (input === 'up' && this.y > 3) ? this.y -= 60
-            : (input === 'down' && this.y < 380) ? this.y += 60
-            : null;
+        if (input === 'left' && this.x > 0) {
+            this.x -= 100;
+        } else if (input === 'right' && this.x < 400) {
+            this.x += 100;
+        } else if (input === 'up' && this.y > 3) {
+            this.y -= 60;
+        } else if (input === 'down' && this.y < 380) {
+            this.y += 60;
+        }
     }
 
     // Reset position of the player
@@ -81,22 +85,22 @@ const allEnemies = [];
         } else {
             return baseSpeed;
         }
-    }
+    };
 
 
     // sets closer spawns
-    for (i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
         x.push(Math.floor(Math.random() * 100 ) - 200);
     }
     // sets further spawns
-    for (i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
         x.push(Math.floor(Math.random() - 200 ) - Math.floor(Math.random() * 500));
     }
     // populates allEnemies array with Enemy objects
-    for (i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         allEnemies.push(new Enemy(x.pop(), y.pop(), setSpeed()));
     }
-})()
+})();
 
 // Randomize which character is selected each time game starts
 // had to add characters to resources to make this work
@@ -110,7 +114,7 @@ const randomCharacter = () => {
     ];
 
     return `images/char-${characters[Math.floor(Math.random() * 5)]}.png`;
-}
+};
 
 // Place the player object in a variable called player
 const player = new Player(200, 380, randomCharacter());
