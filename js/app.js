@@ -17,14 +17,7 @@ class Enemy {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    if (this.x < 505) {
-        this.x += (this.speed * dt);
-    } else {
-        this.x = -90
-    }
+    (this.x < 505) ? this.x += (this.speed * dt) : this.x = -90;
 
     // If the enemy and the player collide.
     if (this.x < player.x + 30 
@@ -48,9 +41,7 @@ class Player {
 
     update() {
         // If the player wins the game by reaching the water
-        if (player.y < 20) {
-            player.reset();
-        }
+        player.y < 20 ? player.reset() : null;
     }
 
     render() {
@@ -58,16 +49,13 @@ class Player {
     }
 
     // Prevents the player from running off the board
+    // And moves them using the appropriate input
     handleInput(input) {
-        if (input === 'left' && this.x > 0) {
-            this.x -= 100;
-        } else if (input === 'right' && this.x < 400) {
-            this.x += 100;
-        } else if (input === 'up' && this.y > 3) {
-            this.y -= 60;
-        } else if (input === 'down' && this.y < 380) {
-            this.y += 60;
-        }
+        (input === 'left' && this.x > 0) ? this.x -= 100
+            : (input === 'right' && this.x < 400) ? this.x += 100
+            : (input === 'up' && this.y > 3) ? this.y -= 60
+            : (input === 'down' && this.y < 380) ? this.y += 60
+            : null;
     }
 
     // Reset position of the player
